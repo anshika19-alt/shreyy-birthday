@@ -14,7 +14,7 @@ body {
     width:100vw;
     background:url("bg.jpg") no-repeat center center fixed;
     background-size:cover;
-    font-family:Arial, Helvetica, sans-serif;
+    font-family:'Arial Black', Arial, sans-serif;
     overflow:hidden;
     position:relative;
 }
@@ -40,7 +40,7 @@ body::after {
     top:50%;
     transform:translateY(-50%);
     color:white;
-    font-size:22px;
+    font-size:24px;
     letter-spacing:2px;
 }
 
@@ -95,15 +95,15 @@ body.shake {
     width:100%;
     text-align:center;
     color:#ff1a1a;
-    font-size:32px;
+    font-size:34px;
     font-weight:bold;
-    text-shadow:0 0 10px red,0 0 25px red;
+    text-shadow:0 0 15px red,0 0 35px red;
 }
 
 button.answer {
     margin:10px;
-    padding:12px 20px;
-    font-size:20px;
+    padding:14px 24px;
+    font-size:22px;
     font-weight:bold;
     border:none;
     cursor:pointer;
@@ -119,24 +119,28 @@ button.answer:hover {
     transform:scale(1.1);
 }
 
-/* ===== MAIN BIRTHDAY MESSAGE (TICKER STYLE) ===== */
+/* ===== MAIN CINEMATIC BIRTHDAY MESSAGE ===== */
 .birthday {
     position:absolute;
-    top:40%;  /* vertical position */
+    top:30%;  /* vertical position */
     left:100%; /* start offscreen right */
-    white-space:nowrap;
-    font-size:52px;
+    white-space:pre-wrap; /* preserve line breaks */
+    font-size:64px;       /* bigger font */
     font-weight:bold;
     color:#ff1a1a;
-    text-shadow:0 0 10px #ff0000,0 0 30px #ff1a1a,0 0 50px #ff3f3f;
+    text-shadow:0 0 15px #ff0000,0 0 40px #ff1a1a,0 0 70px #ff3f3f;
     display:none;
     z-index:6;
-    animation:scrollRightToLeft 20s linear infinite;
+    animation:scrollRightToLeft 25s linear infinite;
 }
 
+/* Scrolling animation */
 @keyframes scrollRightToLeft {
-    0% { left:100%; }
-    100% { left:-100%; }
+    0% { left:100%; opacity:0; transform:scale(0.9) rotate(-5deg);}
+    10% { opacity:1; }
+    50% { left:0%; transform:scale(1.05) rotate(0deg); }
+    90% { opacity:1; }
+    100% { left:-100%; opacity:0; transform:scale(0.95) rotate(5deg);}
 }
 
 /* Each letter glow */
@@ -146,9 +150,9 @@ button.answer:hover {
 }
 
 @keyframes glow {
-    0% { text-shadow: 0 0 5px #ff0000,0 0 10px #ff1a1a; color:#ff4d4d; }
-    50% { text-shadow: 0 0 15px #ff0000,0 0 35px #ff1a1a; color:#ff1a1a; }
-    100% { text-shadow: 0 0 5px #ff0000,0 0 10px #ff1a1a; color:#ff4d4d; }
+    0% { text-shadow: 0 0 10px #ff0000,0 0 20px #ff1a1a; color:#ff4d4d; }
+    50% { text-shadow: 0 0 30px #ff0000,0 0 60px #ff1a1a; color:#ff1a1a; }
+    100% { text-shadow: 0 0 10px #ff0000,0 0 20px #ff1a1a; color:#ff4d4d; }
 }
 
 @media screen and (orientation:landscape) {
@@ -171,7 +175,7 @@ button.answer:hover {
     <button class="answer" id="no">No</button>
 </div>
 
-<!-- BIRTHDAY MESSAGE -->
+<!-- CINEMATIC BIRTHDAY MESSAGE -->
 <div class="birthday" id="birthday-text"></div>
 
 <!-- FLASH -->
@@ -197,9 +201,11 @@ document.addEventListener("DOMContentLoaded", function(){
     randomThunder();
 
     // ===== BIRTHDAY TEXT =====
-    const message = `Happiest Birthday to the sweetest person i met!! "Shreyy" !!🧿🫂
+    const message = `Happy Birthday Shreyy!! 🎀💗✨
+
 Wishing you a day full of laughter 🎉💛
-Stay as cute as you're 👀🌻✨`;
+
+Stay as cute as you aree!! 💖🌻✨`;
 
     const container = document.getElementById("birthday-text");
     container.innerHTML = ""; // reset
@@ -215,8 +221,8 @@ Stay as cute as you're 👀🌻✨`;
     const question = document.getElementById("question");
 
     document.getElementById("yes").addEventListener("click", ()=>{
-        question.style.display = "none";       // hide question
-        container.style.display = "block";     // show main birthday message
+        question.style.display = "none";
+        container.style.display = "block"; // show main cinematic message
     });
 
     document.getElementById("no").addEventListener("click", ()=>{
