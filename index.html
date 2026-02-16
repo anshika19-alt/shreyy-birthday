@@ -5,6 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Stranger Birthday Surprise</title>
 
+<!-- Prevent browser caching -->
+<meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="expires" content="0">
+<meta http-equiv="pragma" content="no-cache">
+
 <style>
 /* ===== FULL SCREEN STRANGER THINGS BACKGROUND ===== */
 body {
@@ -119,13 +124,13 @@ button.answer:hover {
     transform:scale(1.1);
 }
 
-/* ===== MAIN CINEMATIC BIRTHDAY MESSAGE ===== */
+/* ===== CINEMATIC BIRTHDAY MESSAGE ===== */
 .birthday {
     position:absolute;
-    top:30%;  /* vertical position */
-    left:100%; /* start offscreen right */
-    white-space:pre-wrap; /* preserve line breaks */
-    font-size:64px;       /* bigger font */
+    top:30%;
+    left:100%;
+    white-space:pre-wrap;
+    font-size:64px;
     font-weight:bold;
     color:#ff1a1a;
     text-shadow:0 0 15px #ff0000,0 0 40px #ff1a1a,0 0 70px #ff3f3f;
@@ -134,7 +139,6 @@ button.answer:hover {
     animation:scrollRightToLeft 25s linear infinite;
 }
 
-/* Scrolling animation */
 @keyframes scrollRightToLeft {
     0% { left:100%; opacity:0; transform:scale(0.9) rotate(-5deg);}
     10% { opacity:1; }
@@ -143,7 +147,7 @@ button.answer:hover {
     100% { left:-100%; opacity:0; transform:scale(0.95) rotate(5deg);}
 }
 
-/* Each letter glow */
+/* Letter glow */
 .letter {
     display:inline-block;
     animation:glow 1.2s infinite alternate;
@@ -181,6 +185,12 @@ button.answer:hover {
 <!-- FLASH -->
 <div class="flash" id="flash"></div>
 
+<!-- STRANGER THINGS MUSIC -->
+<audio id="bg-music" autoplay loop>
+  <source src="stranger.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+
 <script>
 document.addEventListener("DOMContentLoaded", function(){
 
@@ -205,16 +215,19 @@ document.addEventListener("DOMContentLoaded", function(){
 
 Wishing you a day full of laughter 🎉💛
 
-Stay as cute as you aree!! 💖🌻✨`;
+Stay as cute 💖🌻✨`;
 
     const container = document.getElementById("birthday-text");
     container.innerHTML = ""; // reset
-    message.split('').forEach(char => {
-        const span = document.createElement('span');
-        if(char === '\n') span.innerHTML = '<br>';
-        else span.textContent = char;
-        span.classList.add('letter');
-        container.appendChild(span);
+    message.split('\n').forEach((line) => {
+        const lineDiv = document.createElement('div'); // new line
+        line.split('').forEach(char => {
+            const span = document.createElement('span');
+            span.textContent = char;
+            span.classList.add('letter');
+            lineDiv.appendChild(span);
+        });
+        container.appendChild(lineDiv);
     });
 
     // ===== INTERACTIVE YES/NO =====
@@ -223,6 +236,7 @@ Stay as cute as you aree!! 💖🌻✨`;
     document.getElementById("yes").addEventListener("click", ()=>{
         question.style.display = "none";
         container.style.display = "block"; // show main cinematic message
+        document.getElementById("bg-music").play(); // ensure music starts
     });
 
     document.getElementById("no").addEventListener("click", ()=>{
