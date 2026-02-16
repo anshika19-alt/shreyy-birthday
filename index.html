@@ -88,10 +88,7 @@ body.shake {
 }
 
 /* ===== INTERACTIVE QUESTION ===== */
-
-<script>
-// ===== CINEMATIC THUNDER =====
-function thunder(){#question {
+#question {
     position:absolute;
     z-index:5;
     top:40%;
@@ -147,7 +144,7 @@ button.answer:hover {
     100% { text-shadow: 0 0 5px #ff0000,0 0 10px #ff1a1a; color:#ff4d4d; }
 }
 
-/* Diagonal slide */
+/* Diagonal slide for birthday text */
 .travel {
     position:absolute;
     animation:slideAcross 8s linear infinite;
@@ -215,47 +212,55 @@ button.answer:hover {
 <!-- FLASH -->
 <div class="flash" id="flash"></div>
 
-    const flash = document.getElementById("flash");
-    flash.classList.add("active");
-    document.body.classList.add("shake");
-    setTimeout(()=>{
-        flash.classList.remove("active");
-        document.body.classList.remove("shake");
-    },600);
-}
-function randomThunder(){
-    thunder();
-    setTimeout(randomThunder, 2000 + Math.random()*3000);
-}
-randomThunder();
+<script>
+// ===== WAIT FOR DOM =====
+document.addEventListener("DOMContentLoaded", function(){
 
-// ===== BIRTHDAY TEXT =====
-const message = `
+    // ===== CINEMATIC THUNDER =====
+    function thunder(){
+        const flash = document.getElementById("flash");
+        flash.classList.add("active");
+        document.body.classList.add("shake");
+        setTimeout(()=>{
+            flash.classList.remove("active");
+            document.body.classList.remove("shake");
+        },600);
+    }
+    function randomThunder(){
+        thunder();
+        setTimeout(randomThunder, 2000 + Math.random()*3000);
+    }
+    randomThunder();
+
+    // ===== BIRTHDAY TEXT =====
+    const message = `
 Happy Birthday Shreyy!! 🎀💗✨
 Wishing you a day full of laughter 🎉💛
 Stay as cute 💖🌻✨
 `;
-const container = document.getElementById("birthday-text");
-message.split('').forEach(char => {
-    const span = document.createElement('span');
-    if(char === '\n') span.innerHTML = '<br>';
-    else span.textContent = char;
-    span.classList.add('letter');
-    container.appendChild(span);
-});
+    const container = document.getElementById("birthday-text");
+    message.split('').forEach(char => {
+        const span = document.createElement('span');
+        if(char === '\n') span.innerHTML = '<br>';
+        else span.textContent = char;
+        span.classList.add('letter');
+        container.appendChild(span);
+    });
 
-// ===== INTERACTIVE YES/NO =====
-const question = document.getElementById("question");
-const ticker = document.getElementById("ticker");
+    // ===== INTERACTIVE YES/NO =====
+    const question = document.getElementById("question");
+    const ticker = document.getElementById("ticker");
 
-document.getElementById("yes").addEventListener("click", ()=>{
-    question.style.display = "none";        // hide question
-    container.style.display = "block";      // show birthday text
-    ticker.style.display = "block";         // show ticker tape
-});
+    document.getElementById("yes").addEventListener("click", ()=>{
+        question.style.display = "none";        // hide question
+        container.style.display = "block";      // show birthday text
+        ticker.style.display = "block";         // show ticker tape
+    });
 
-document.getElementById("no").addEventListener("click", ()=>{
-    alert("😶‍🌫️ Are you sure? Click YES to see the surprise!");
+    document.getElementById("no").addEventListener("click", ()=>{
+        alert("😶‍🌫️ Are you sure? Click YES to see the surprise!");
+    });
+
 });
 </script>
 
