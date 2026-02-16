@@ -3,12 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Stranger Birthday v2</title>
+<title>Stranger Birthday</title>
 
 <style>
-
-/* ===== FULL SCREEN BACKGROUND ===== */
-body{
+/* ===== FULL SCREEN STRANGER THINGS THEME ===== */
+body {
     margin:0;
     padding:0;
     height:100vh;
@@ -19,20 +18,19 @@ body{
     overflow:hidden;
 }
 
-/* Dark overlay */
-body::after{
+body::after {
     content:"";
     position:absolute;
-    width:100%;
-    height:100%;
     top:0;
     left:0;
+    width:100%;
+    height:100%;
     background:rgba(0,0,0,0.65);
     z-index:1;
 }
 
-/* ===== PORTRAIT MESSAGE ===== */
-.rotate{
+/* Portrait rotate message */
+.rotate {
     position:absolute;
     z-index:3;
     width:100%;
@@ -44,51 +42,46 @@ body::after{
     letter-spacing:2px;
 }
 
-/* ===== BIRTHDAY TEXT ===== */
-.birthday{
+/* Birthday container */
+.birthday {
     position:absolute;
     z-index:5;
-    font-size:52px;
-    color:#ff1a1a;
+    top:0;
+    left:0;
+    font-size:48px;
     font-weight:bold;
-    text-shadow:0 0 15px red, 0 0 35px red;
-    opacity:0;
+    color:#ff1a1a;
+    text-shadow:0 0 10px #ff0000, 0 0 30px #ff1a1a, 0 0 50px #ff3f3f;
 }
 
-/* ===== TEXT TRAVEL ANIMATION ===== */
-@keyframes travel{
-    0%{
-        left:-300px;
-        bottom:-200px;
-        opacity:0;
-        transform:scale(0.8) rotate(-8deg);
-    }
-    20%{opacity:1;}
-    50%{
-        left:35%;
-        bottom:40%;
-        transform:scale(1.1);
-    }
-    80%{opacity:1;}
-    100%{
-        left:110%;
-        bottom:85%;
-        opacity:0;
-    }
+/* Each letter glow + flicker */
+.letter {
+    display:inline-block;
+    animation:glow 1.2s infinite alternate;
 }
 
-/* Only when rotated */
-@media screen and (orientation:landscape){
-    .rotate{display:none;}
-
-    .birthday{
-        animation:travel 6s linear infinite;
-    }
+@keyframes glow {
+    0% { text-shadow: 0 0 5px #ff0000,0 0 10px #ff1a1a; color:#ff4d4d; }
+    50% { text-shadow: 0 0 15px #ff0000,0 0 35px #ff1a1a; color:#ff1a1a; }
+    100% { text-shadow: 0 0 5px #ff0000,0 0 10px #ff1a1a; color:#ff4d4d; }
 }
 
-/* ===== THUNDER FLASH ===== */
-./* ===== CINEMATIC LIGHTNING FLASH ===== */
-.flash{
+/* Slide across animation */
+.travel {
+    position:absolute;
+    animation:slideAcross 8s linear infinite;
+}
+
+@keyframes slideAcross {
+    0% { top:0; left:0; opacity:0; transform:rotate(-10deg) scale(0.8);}
+    10% {opacity:1;}
+    50% { top:40%; left:40%; transform:rotate(0deg) scale(1.1);}
+    90% {opacity:1;}
+    100% { top:80%; left:100%; opacity:0; transform:rotate(10deg) scale(0.9);}
+}
+
+/* Cinematic flash */
+.flash {
     position:fixed;
     top:0;
     left:0;
@@ -104,28 +97,25 @@ body::after{
     mix-blend-mode:screen;
 }
 
-/* Lightning animation */
-.flash.active{
+.flash.active {
     animation:lightning 0.6s ease-out;
 }
 
-/* Realistic uneven lightning */
-@keyframes lightning{
-    0%   {opacity:0;}
-    10%  {opacity:1;}
-    20%  {opacity:0.4;}
-    30%  {opacity:1;}
-    45%  {opacity:0.2;}
-    60%  {opacity:0.9;}
-    100% {opacity:0;}
+@keyframes lightning {
+    0%{opacity:0;}
+    10%{opacity:1;}
+    20%{opacity:0.4;}
+    30%{opacity:1;}
+    45%{opacity:0.2;}
+    60%{opacity:0.9;}
+    100%{opacity:0;}
 }
 
-/* Slight camera shake */
-body.shake{
+body.shake {
     animation:shake 0.4s ease;
 }
 
-@keyframes shake{
+@keyframes shake {
     0%{transform:translate(0,0);}
     25%{transform:translate(-3px,2px);}
     50%{transform:translate(3px,-2px);}
@@ -133,52 +123,60 @@ body.shake{
     100%{transform:translate(0,0);}
 }
 
+@media screen and (orientation:landscape) {
+    .rotate {display:none;}
+}
 </style>
 </head>
 
 <body>
 
-<!-- Message before rotate -->
+<!-- PORTRAIT MESSAGE -->
 <div class="rotate">
     📱 Rotate Your Phone... Enter The Upside Down
 </div>
 
-<!-- ✨ EDIT YOUR MESSAGE HERE -->
-<div class="birthday">
-    Happy Birthday Shreyy!! 🎂
+<!-- BIRTHDAY MESSAGE -->
+<div class="birthday travel" id="birthday-text">
+    <!-- Letters will be added by JS -->
 </div>
 
+<!-- FLASH -->
 <div class="flash" id="flash"></div>
 
 <script>
+/* ===== SPLIT TEXT INTO LETTERS ===== */
+const text = "Happy Birthday Shreyy!! 🎉🥳💗";
+const container = document.getElementById("birthday-text");
 
-/* Lightning effect */
-<script>
+for(let char of text){
+    const span = document.createElement("span");
+    span.textContent = char;
+    span.classList.add("letter");
+    container.appendChild(span);
+}
 
-/* ===== CINEMATIC THUNDER SYSTEM ===== */
-
+/* ===== CINEMATIC THUNDER ===== */
 function thunder(){
     const flash = document.getElementById("flash");
-
-    // start lightning animation
     flash.classList.add("active");
     document.body.classList.add("shake");
 
-    // remove effect after animation ends
     setTimeout(()=>{
         flash.classList.remove("active");
         document.body.classList.remove("shake");
     },600);
 }
 
-/* Random natural timing */
+/* Continuous thunder every 2–5s */
 function randomThunder(){
     thunder();
-
-    const next = 2000 + Math.random()*5000; // random delay
+    const next = 2000 + Math.random()*3000;
     setTimeout(randomThunder, next);
 }
 
 randomThunder();
-
 </script>
+
+</body>
+</html>
