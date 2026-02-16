@@ -6,7 +6,8 @@
 <title>Stranger Birthday</title>
 
 <style>
-/* ===== BACKGROUND ===== */
+
+/* ===== FULL SCREEN BACKGROUND ===== */
 body{
     margin:0;
     padding:0;
@@ -18,27 +19,27 @@ body{
     overflow:hidden;
 }
 
-/* Dark cinematic overlay */
+/* Dark overlay */
 body::after{
     content:"";
     position:absolute;
-    top:0;
-    left:0;
     width:100%;
     height:100%;
+    top:0;
+    left:0;
     background:rgba(0,0,0,0.65);
     z-index:1;
 }
 
-/* ===== ROTATE MESSAGE (Portrait Mode) ===== */
+/* ===== PORTRAIT MESSAGE ===== */
 .rotate{
     position:absolute;
     z-index:3;
-    color:white;
     width:100%;
     text-align:center;
     top:50%;
     transform:translateY(-50%);
+    color:white;
     font-size:22px;
     letter-spacing:2px;
 }
@@ -50,34 +51,33 @@ body::after{
     font-size:52px;
     color:#ff1a1a;
     font-weight:bold;
-    text-shadow:0 0 10px red, 0 0 25px red;
+    text-shadow:0 0 15px red, 0 0 35px red;
     opacity:0;
 }
 
-/* Animation: Comes from corner → moves → disappears */
-@keyframes travel {
+/* ===== TEXT TRAVEL ANIMATION ===== */
+@keyframes travel{
     0%{
         left:-300px;
         bottom:-200px;
         opacity:0;
-        transform:scale(0.8) rotate(-10deg);
+        transform:scale(0.8) rotate(-8deg);
     }
     20%{opacity:1;}
     50%{
-        left:40%;
+        left:35%;
         bottom:40%;
         transform:scale(1.1);
     }
     80%{opacity:1;}
     100%{
         left:110%;
-        bottom:80%;
+        bottom:85%;
         opacity:0;
-        transform:scale(0.9);
     }
 }
 
-/* Show only in landscape */
+/* Only when rotated */
 @media screen and (orientation:landscape){
     .rotate{display:none;}
 
@@ -86,7 +86,7 @@ body::after{
     }
 }
 
-/* ===== THUNDER FLASH EFFECT ===== */
+/* ===== THUNDER FLASH ===== */
 .flash{
     position:absolute;
     top:0;
@@ -98,17 +98,18 @@ body::after{
     z-index:4;
     pointer-events:none;
 }
+
 </style>
 </head>
 
 <body>
 
-<!-- Message shown before rotating -->
+<!-- Message before rotate -->
 <div class="rotate">
-    📱 Rotate Your Phone... Something Strange Is Waiting
+    📱 Rotate Your Phone... Enter The Upside Down
 </div>
 
-<!-- ⚠️ EDIT YOUR MESSAGE HERE -->
+<!-- ✨ EDIT YOUR MESSAGE HERE -->
 <div class="birthday">
     Happy Birthday Shreyy!! 🎂
 </div>
@@ -116,21 +117,23 @@ body::after{
 <div class="flash" id="flash"></div>
 
 <script>
-/* ===== RANDOM THUNDER EFFECT ===== */
+
+/* Lightning effect */
 function thunder(){
     const flash = document.getElementById("flash");
 
-    flash.style.opacity = "0.8";
+    flash.style.opacity="0.9";
 
-    setTimeout(()=>{flash.style.opacity="0";},100);
-    setTimeout(()=>{flash.style.opacity="0.6";},200);
-    setTimeout(()=>{flash.style.opacity="0";},350);
+    setTimeout(()=>{flash.style.opacity="0";},120);
+    setTimeout(()=>{flash.style.opacity="0.6";},260);
+    setTimeout(()=>{flash.style.opacity="0";},420);
 }
 
-/* Random lightning timing */
+/* Random thunder timing */
 setInterval(()=>{
     thunder();
 }, 3000 + Math.random()*4000);
+
 </script>
 
 </body>
