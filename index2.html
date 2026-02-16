@@ -5,85 +5,45 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Stranger Birthday Surprise</title>
 
-<!-- Prevent browser caching -->
-<meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate">
-<meta http-equiv="expires" content="0">
-<meta http-equiv="pragma" content="no-cache">
-
 <style>
-/* ===== FULL SCREEN STRANGER THINGS BACKGROUND ===== */
 body {
-    margin:0;
-    padding:0;
-    height:100vh;
-    width:100vw;
+    margin:0; padding:0;
+    height:100vh; width:100vw;
     background:url("bg.jpg") no-repeat center center fixed;
     background-size:cover;
-    font-family:'Arial Black', Arial, sans-serif;
+    font-family:Arial, Helvetica, sans-serif;
     overflow:hidden;
     position:relative;
 }
-
-/* Dark cinematic overlay */
 body::after {
     content:"";
     position:absolute;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
+    top:0; left:0;
+    width:100%; height:100%;
     background:rgba(0,0,0,0.65);
     z-index:1;
 }
-
-/* ROTATE MESSAGE */
 .rotate {
-    position:absolute;
-    z-index:3;
-    width:100%;
-    text-align:center;
-    top:50%;
-    transform:translateY(-50%);
-    color:white;
-    font-size:24px;
-    letter-spacing:2px;
+    position:absolute; z-index:3;
+    width:100%; text-align:center;
+    top:50%; transform:translateY(-50%);
+    color:white; font-size:22px; letter-spacing:2px;
 }
-
-/* ===== CINEMATIC THUNDER FLASH ===== */
 .flash {
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
+    position:fixed; top:0; left:0; width:100%; height:100%;
     background:
         radial-gradient(circle at 30% 20%, rgba(255,255,255,0.9), transparent 40%),
         radial-gradient(circle at 70% 60%, rgba(255,255,255,0.6), transparent 50%),
         rgba(255,255,255,0.95);
-    opacity:0;
-    z-index:4;
-    pointer-events:none;
-    mix-blend-mode:screen;
+    opacity:0; z-index:4;
+    pointer-events:none; mix-blend-mode:screen;
 }
-
-.flash.active {
-    animation:lightning 0.6s ease-out;
-}
-
+.flash.active { animation:lightning 0.6s ease-out; }
 @keyframes lightning{
-    0%{opacity:0;}
-    10%{opacity:1;}
-    20%{opacity:0.4;}
-    30%{opacity:1;}
-    45%{opacity:0.2;}
-    60%{opacity:0.9;}
-    100%{opacity:0;}
+    0%{opacity:0;} 10%{opacity:1;} 20%{opacity:0.4;} 30%{opacity:1;}
+    45%{opacity:0.2;} 60%{opacity:0.9;} 100%{opacity:0;}
 }
-
-body.shake {
-    animation:shake 0.4s ease;
-}
-
+body.shake { animation:shake 0.4s ease; }
 @keyframes shake{
     0%{transform:translate(0,0);}
     25%{transform:translate(-3px,2px);}
@@ -91,158 +51,118 @@ body.shake {
     75%{transform:translate(-2px,1px);}
     100%{transform:translate(0,0);}
 }
-
-/* ===== INTERACTIVE QUESTION ===== */
 #question {
-    position:absolute;
-    z-index:5;
-    top:40%;
-    width:100%;
-    text-align:center;
-    color:#ff1a1a;
-    font-size:34px;
-    font-weight:bold;
-    text-shadow:0 0 15px red,0 0 35px red;
+    position:absolute; z-index:5; top:40%;
+    width:100%; text-align:center; color:#ff1a1a;
+    font-size:32px; font-weight:bold;
+    text-shadow:0 0 10px red,0 0 25px red;
 }
-
 button.answer {
-    margin:10px;
-    padding:14px 24px;
-    font-size:22px;
-    font-weight:bold;
-    border:none;
-    cursor:pointer;
-    border-radius:5px;
-    background:#ff1a1a;
-    color:white;
-    text-shadow:0 0 5px #ff0000;
-    transition:0.2s all;
+    margin:10px; padding:12px 20px;
+    font-size:20px; font-weight:bold;
+    border:none; cursor:pointer; border-radius:5px;
+    background:#ff1a1a; color:white;
+    text-shadow:0 0 5px #ff0000; transition:0.2s all;
 }
-
-button.answer:hover {
-    background:#ff4d4d;
-    transform:scale(1.1);
-}
-
-/* ===== CINEMATIC BIRTHDAY MESSAGE ===== */
+button.answer:hover { background:#ff4d4d; transform:scale(1.1); }
 .birthday {
-    position:absolute;
-    top:30%;
-    left:100%;
-    white-space:pre-wrap;
-    font-size:64px;
-    font-weight:bold;
-    color:#ff1a1a;
-    text-shadow:0 0 15px #ff0000,0 0 40px #ff1a1a,0 0 70px #ff3f3f;
-    display:none;
-    z-index:6;
-    animation:scrollRightToLeft 25s linear infinite;
+    position:absolute; z-index:6; top:10%; left:0; width:100%;
+    font-size:64px; font-weight:bold; color:#ff1a1a;
+    text-align:center; text-shadow:0 0 15px #ff0000,0 0 45px #ff1a1a,0 0 75px #ff3f3f;
+    display:none; line-height:1.5;
 }
-
-@keyframes scrollRightToLeft {
-    0% { left:100%; opacity:0; transform:scale(0.9) rotate(-5deg);}
-    10% { opacity:1; }
-    50% { left:0%; transform:scale(1.05) rotate(0deg); }
-    90% { opacity:1; }
-    100% { left:-100%; opacity:0; transform:scale(0.95) rotate(5deg);}
-}
-
-/* Letter glow */
-.letter {
-    display:inline-block;
-    animation:glow 1.2s infinite alternate;
-}
-
+.letter { display:inline-block; animation:glow 1.2s infinite alternate; }
 @keyframes glow {
-    0% { text-shadow: 0 0 10px #ff0000,0 0 20px #ff1a1a; color:#ff4d4d; }
-    50% { text-shadow: 0 0 30px #ff0000,0 0 60px #ff1a1a; color:#ff1a1a; }
-    100% { text-shadow: 0 0 10px #ff0000,0 0 20px #ff1a1a; color:#ff4d4d; }
+    0%{ text-shadow:0 0 5px #ff0000,0 0 10px #ff1a1a;color:#ff4d4d; }
+    50%{ text-shadow:0 0 25px #ff0000,0 0 55px #ff1a1a;color:#ff1a1a; }
+    100%{ text-shadow:0 0 5px #ff0000,0 0 10px #ff1a1a;color:#ff4d4d; }
 }
-
-@media screen and (orientation:landscape) {
-    .rotate {display:none;}
+.travel {
+    position:absolute;
+    animation:slideAcross 12s linear infinite;
 }
+@keyframes slideAcross{
+    0%{ top:10%; left:100%; opacity:0; transform:rotate(-10deg) scale(0.8);}
+    10%{opacity:1;}
+    50%{ top:40%; left:40%; transform:rotate(0deg) scale(1.1);}
+    90%{opacity:1;}
+    100%{ top:60%; left:-100%; opacity:0; transform:rotate(10deg) scale(0.9);}
+}
+#ticker {
+    position:absolute; bottom:10px; width:100%; white-space:nowrap;
+    overflow:hidden; font-size:28px; font-weight:bold; color:#ff1a1a;
+    text-shadow:0 0 15px #ff0000; display:none;
+}
+#ticker span { display:inline-block; padding-right:50px; animation:scroll 15s linear infinite; }
+@keyframes scroll { 0%{transform:translateX(100%);} 100%{transform:translateX(-100%);} }
+@media screen and (orientation:landscape){ .rotate{display:none;} }
 </style>
 </head>
 
 <body>
 
-<!-- ROTATE MESSAGE -->
-<div class="rotate">
-    📱 Rotate Your Phone... Enter The Upside Down
-</div>
+<div class="rotate">📱 Rotate Your Phone... Enter The Upside Down</div>
 
-<!-- QUESTION -->
 <div id="question">
     Do you want to enter the Upside Down? <br>
     <button class="answer" id="yes">Yes</button>
     <button class="answer" id="no">No</button>
 </div>
 
-<!-- CINEMATIC BIRTHDAY MESSAGE -->
-<div class="birthday" id="birthday-text"></div>
+<div class="birthday travel" id="birthday-text"></div>
 
-<!-- FLASH -->
+<div id="ticker"><span>🎉 Happy Birthday Shreyy!! 🎀💗✨ Stay awesome! 🌻💖🎉</span></div>
+
 <div class="flash" id="flash"></div>
 
-<!-- STRANGER THINGS MUSIC -->
-<audio id="bg-music" autoplay loop>
+<!-- Music (will be triggered after user interaction) -->
+<audio id="bg-music" loop>
   <source src="stranger.mp3" type="audio/mpeg">
-  Your browser does not support the audio element.
 </audio>
 
 <script>
-document.addEventListener("DOMContentLoaded", function(){
+// Cinematic thunder
+function thunder(){
+    const flash = document.getElementById("flash");
+    flash.classList.add("active");
+    document.body.classList.add("shake");
+    setTimeout(()=>{
+        flash.classList.remove("active");
+        document.body.classList.remove("shake");
+    },600);
+}
+function randomThunder(){ thunder(); setTimeout(randomThunder, 2000+Math.random()*3000); }
+randomThunder();
 
-    // ===== CINEMATIC THUNDER =====
-    function thunder(){
-        const flash = document.getElementById("flash");
-        flash.classList.add("active");
-        document.body.classList.add("shake");
-        setTimeout(()=>{
-            flash.classList.remove("active");
-            document.body.classList.remove("shake");
-        },600);
-    }
-    function randomThunder(){
-        thunder();
-        setTimeout(randomThunder, 2000 + Math.random()*3000);
-    }
-    randomThunder();
-
-    // ===== BIRTHDAY TEXT =====
-    const message = `Happy Birthday Shreyy!! 🎀💗✨
-
+// Birthday message setup
+const message = `
+🎉 Happy Birthday Shreyy!! 🎀💗✨
 Wishing you a day full of laughter 🎉💛
+Stay as cute 💖🌻✨
+`;
+const container = document.getElementById("birthday-text");
+message.split('').forEach(char=>{
+    const span=document.createElement('span');
+    span.textContent = (char=='\n')?'':'char';
+    if(char=='\n') span.innerHTML='<br>';
+    span.classList.add('letter');
+    container.appendChild(span);
+});
 
-Stay as cute 💖🌻✨`;
+// YES/NO logic
+const question = document.getElementById("question");
+const ticker = document.getElementById("ticker");
+const music = document.getElementById("bg-music");
 
-    const container = document.getElementById("birthday-text");
-    container.innerHTML = ""; // reset
-    message.split('\n').forEach((line) => {
-        const lineDiv = document.createElement('div'); // new line
-        line.split('').forEach(char => {
-            const span = document.createElement('span');
-            span.textContent = char;
-            span.classList.add('letter');
-            lineDiv.appendChild(span);
-        });
-        container.appendChild(lineDiv);
-    });
+document.getElementById("yes").addEventListener("click", ()=>{
+    question.style.display="none";
+    container.style.display="block";
+    ticker.style.display="block";
+    music.play();  // mobile-friendly: music starts on user interaction
+});
 
-    // ===== INTERACTIVE YES/NO =====
-    const question = document.getElementById("question");
-
-    document.getElementById("yes").addEventListener("click", ()=>{
-        question.style.display = "none";
-        container.style.display = "block"; // show main cinematic message
-        document.getElementById("bg-music").play(); // ensure music starts
-    });
-
-    document.getElementById("no").addEventListener("click", ()=>{
-        alert("😶‍🌫️ Are you sure? Click YES to see the surprise!");
-    });
-
+document.getElementById("no").addEventListener("click", ()=>{
+    alert("😶‍🌫️ Are you sure? Click YES to see the surprise!");
 });
 </script>
 
