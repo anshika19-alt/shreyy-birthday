@@ -87,16 +87,50 @@ body::after{
 }
 
 /* ===== THUNDER FLASH ===== */
+./* ===== CINEMATIC LIGHTNING FLASH ===== */
 .flash{
-    position:absolute;
+    position:fixed;
     top:0;
     left:0;
     width:100%;
     height:100%;
-    background:white;
+    background:
+        radial-gradient(circle at 30% 20%, rgba(255,255,255,0.9), transparent 40%),
+        radial-gradient(circle at 70% 60%, rgba(255,255,255,0.6), transparent 50%),
+        rgba(255,255,255,0.95);
     opacity:0;
     z-index:4;
     pointer-events:none;
+    mix-blend-mode:screen;
+}
+
+/* Lightning animation */
+.flash.active{
+    animation:lightning 0.6s ease-out;
+}
+
+/* Realistic uneven lightning */
+@keyframes lightning{
+    0%   {opacity:0;}
+    10%  {opacity:1;}
+    20%  {opacity:0.4;}
+    30%  {opacity:1;}
+    45%  {opacity:0.2;}
+    60%  {opacity:0.9;}
+    100% {opacity:0;}
+}
+
+/* Slight camera shake */
+body.shake{
+    animation:shake 0.4s ease;
+}
+
+@keyframes shake{
+    0%{transform:translate(0,0);}
+    25%{transform:translate(-3px,2px);}
+    50%{transform:translate(3px,-2px);}
+    75%{transform:translate(-2px,1px);}
+    100%{transform:translate(0,0);}
 }
 
 </style>
@@ -119,22 +153,32 @@ body::after{
 <script>
 
 /* Lightning effect */
+<script>
+
+/* ===== CINEMATIC THUNDER SYSTEM ===== */
+
 function thunder(){
     const flash = document.getElementById("flash");
 
-    flash.style.opacity="0.9";
+    // start lightning animation
+    flash.classList.add("active");
+    document.body.classList.add("shake");
 
-    setTimeout(()=>{flash.style.opacity="0";},120);
-    setTimeout(()=>{flash.style.opacity="0.6";},260);
-    setTimeout(()=>{flash.style.opacity="0";},420);
+    // remove effect after animation ends
+    setTimeout(()=>{
+        flash.classList.remove("active");
+        document.body.classList.remove("shake");
+    },600);
 }
 
-/* Random thunder timing */
-setInterval(()=>{
+/* Random natural timing */
+function randomThunder(){
     thunder();
-}, 3000 + Math.random()*4000);
+
+    const next = 2000 + Math.random()*5000; // random delay
+    setTimeout(randomThunder, next);
+}
+
+randomThunder();
 
 </script>
-
-</body>
-</html>
