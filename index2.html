@@ -17,8 +17,7 @@ body {
 }
 body::after {
     content:"";
-    position:absolute;
-    top:0; left:0;
+    position:absolute; top:0; left:0;
     width:100%; height:100%;
     background:rgba(0,0,0,0.65);
     z-index:1;
@@ -69,7 +68,7 @@ button.answer:hover { background:#ff4d4d; transform:scale(1.1); }
     position:absolute; z-index:6; top:10%; left:0; width:100%;
     font-size:64px; font-weight:bold; color:#ff1a1a;
     text-align:center; text-shadow:0 0 15px #ff0000,0 0 45px #ff1a1a,0 0 75px #ff3f3f;
-    display:none; line-height:1.5;
+    display:none; line-height:1.8;
 }
 .letter { display:inline-block; animation:glow 1.2s infinite alternate; }
 @keyframes glow {
@@ -115,7 +114,7 @@ button.answer:hover { background:#ff4d4d; transform:scale(1.1); }
 
 <div class="flash" id="flash"></div>
 
-<!-- Music (will be triggered after user interaction) -->
+<!-- Music (mobile-friendly) -->
 <audio id="bg-music" loop>
   <source src="stranger.mp3" type="audio/mpeg">
 </audio>
@@ -134,17 +133,17 @@ function thunder(){
 function randomThunder(){ thunder(); setTimeout(randomThunder, 2000+Math.random()*3000); }
 randomThunder();
 
-// Birthday message setup
-const message = `
-🎉 Happy Birthday Shreyy!! 🎀💗✨
+// Birthday message setup (fixed)
+const message = `🎉 Happy Birthday Shreyy!! 🎀💗✨
 Wishing you a day full of laughter 🎉💛
 Stay as cute 💖🌻✨
 `;
+
 const container = document.getElementById("birthday-text");
 message.split('').forEach(char=>{
-    const span=document.createElement('span');
-    span.textContent = (char=='\n')?'':'char';
-    if(char=='\n') span.innerHTML='<br>';
+    const span = document.createElement('span');
+    if(char === '\n') span.innerHTML = '<br>';  // insert line breaks
+    else span.textContent = char;               // insert emojis & chars correctly
     span.classList.add('letter');
     container.appendChild(span);
 });
@@ -158,7 +157,7 @@ document.getElementById("yes").addEventListener("click", ()=>{
     question.style.display="none";
     container.style.display="block";
     ticker.style.display="block";
-    music.play();  // mobile-friendly: music starts on user interaction
+    music.play();  // music starts on user interaction (Android/iOS)
 });
 
 document.getElementById("no").addEventListener("click", ()=>{
