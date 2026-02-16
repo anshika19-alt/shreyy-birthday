@@ -119,17 +119,25 @@ button.answer:hover {
     transform:scale(1.1);
 }
 
-/* ===== BIRTHDAY MESSAGE ===== */
+/* ===== BIRTHDAY MESSAGE (TICKER STYLE) ===== */
 .birthday {
     position:absolute;
-    z-index:6;
-    top:0;
-    left:0;
-    font-size:48px;
+    top:40%;  /* vertical position */
+    left:100%; /* start offscreen */
+    white-space:nowrap;
+    font-size:52px;
     font-weight:bold;
     color:#ff1a1a;
     text-shadow:0 0 10px #ff0000,0 0 30px #ff1a1a,0 0 50px #ff3f3f;
     display:none;
+    z-index:6;
+    animation:scrollRightToLeft 20s linear infinite;
+}
+
+/* Scrolling animation */
+@keyframes scrollRightToLeft {
+    0% { left:100%; }
+    100% { left:-100%; }
 }
 
 /* Each letter glow */
@@ -144,21 +152,7 @@ button.answer:hover {
     100% { text-shadow: 0 0 5px #ff0000,0 0 10px #ff1a1a; color:#ff4d4d; }
 }
 
-/* Diagonal slide for birthday text */
-.travel {
-    position:absolute;
-    animation:slideAcross 8s linear infinite;
-}
-
-@keyframes slideAcross {
-    0% { top:0; left:0; opacity:0; transform:rotate(-10deg) scale(0.8);}
-    10% {opacity:1;}
-    50% { top:40%; left:40%; transform:rotate(0deg) scale(1.1);}
-    90% {opacity:1;}
-    100% { top:80%; left:100%; opacity:0; transform:rotate(10deg) scale(0.9);}
-}
-
-/* ===== TICKER TAPE ===== */
+/* ===== TICKER TAPE AT BOTTOM ===== */
 #ticker {
     position:absolute;
     bottom:10px;
@@ -175,10 +169,10 @@ button.answer:hover {
 #ticker span {
     display:inline-block;
     padding-right:50px;
-    animation:scroll 15s linear infinite;
+    animation:scrollTicker 15s linear infinite;
 }
 
-@keyframes scroll {
+@keyframes scrollTicker {
     0% {transform:translateX(100%);}
     100% {transform:translateX(-100%);}
 }
@@ -204,16 +198,15 @@ button.answer:hover {
 </div>
 
 <!-- BIRTHDAY MESSAGE -->
-<div class="birthday travel" id="birthday-text"></div>
+<div class="birthday" id="birthday-text"></div>
 
 <!-- TICKER -->
-<div id="ticker"><span>🎉 Happy Birthday Shreyy!! 🎀💗✨ Stay awesome! 🌻💖🎉</span></div>
+<div id="ticker"><span>🎉 Happy Birthday to the sweetest person i met!! "Shreyy"👀✨🎀🎉</span></div>
 
 <!-- FLASH -->
 <div class="flash" id="flash"></div>
 
 <script>
-// ===== WAIT FOR DOM =====
 document.addEventListener("DOMContentLoaded", function(){
 
     // ===== CINEMATIC THUNDER =====
@@ -233,12 +226,12 @@ document.addEventListener("DOMContentLoaded", function(){
     randomThunder();
 
     // ===== BIRTHDAY TEXT =====
-    const message = `
-Happy Birthday Shreyy!! 🎀💗✨
+    const message = `Happy Birthday Shreyy!! 🎀💗✨
 Wishing you a day full of laughter 🎉💛
-Stay as cute 💖🌻✨
-`;
+Stay as cute 💖🌻✨`;
+
     const container = document.getElementById("birthday-text");
+    container.innerHTML = ""; // reset
     message.split('').forEach(char => {
         const span = document.createElement('span');
         if(char === '\n') span.innerHTML = '<br>';
@@ -252,9 +245,9 @@ Stay as cute 💖🌻✨
     const ticker = document.getElementById("ticker");
 
     document.getElementById("yes").addEventListener("click", ()=>{
-        question.style.display = "none";        // hide question
-        container.style.display = "block";      // show birthday text
-        ticker.style.display = "block";         // show ticker tape
+        question.style.display = "none";
+        container.style.display = "block"; // birthday message scrolls across
+        ticker.style.display = "block";    // ticker at bottom
     });
 
     document.getElementById("no").addEventListener("click", ()=>{
