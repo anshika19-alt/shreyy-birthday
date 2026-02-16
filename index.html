@@ -6,7 +6,7 @@
 <title>Stranger Birthday Surprise</title>
 
 <style>
-/* ===== FULL SCREEN STRANGER THINGS THEME ===== */
+/* ===== FULL SCREEN STRANGER THINGS BACKGROUND ===== */
 body {
     margin:0;
     padding:0;
@@ -16,6 +16,7 @@ body {
     background-size:cover;
     font-family:Arial, Helvetica, sans-serif;
     overflow:hidden;
+    position:relative;
 }
 
 /* Dark cinematic overlay */
@@ -30,7 +31,7 @@ body::after {
     z-index:1;
 }
 
-/* ROTATE MESSAGE (portrait) */
+/* ROTATE MESSAGE */
 .rotate {
     position:absolute;
     z-index:3;
@@ -43,7 +44,7 @@ body::after {
     letter-spacing:2px;
 }
 
-/* ===== CINEMATIC FLASH ===== */
+/* ===== CINEMATIC THUNDER FLASH ===== */
 .flash {
     position:fixed;
     top:0;
@@ -60,7 +61,7 @@ body::after {
     mix-blend-mode:screen;
 }
 
-.flash.active{
+.flash.active {
     animation:lightning 0.6s ease-out;
 }
 
@@ -74,7 +75,7 @@ body::after {
     100%{opacity:0;}
 }
 
-body.shake{
+body.shake {
     animation:shake 0.4s ease;
 }
 
@@ -87,7 +88,10 @@ body.shake{
 }
 
 /* ===== INTERACTIVE QUESTION ===== */
-#question {
+
+<script>
+// ===== CINEMATIC THUNDER =====
+function thunder(){#question {
     position:absolute;
     z-index:5;
     top:40%;
@@ -100,7 +104,7 @@ body.shake{
 }
 
 button.answer {
-    margin: 10px;
+    margin:10px;
     padding:12px 20px;
     font-size:20px;
     font-weight:bold;
@@ -181,12 +185,16 @@ button.answer:hover {
     0% {transform:translateX(100%);}
     100% {transform:translateX(-100%);}
 }
+
+@media screen and (orientation:landscape) {
+    .rotate {display:none;}
+}
 </style>
 </head>
 
 <body>
 
-<!-- ROTATE PROMPT -->
+<!-- ROTATE MESSAGE -->
 <div class="rotate">
     📱 Rotate Your Phone... Enter The Upside Down
 </div>
@@ -207,9 +215,6 @@ button.answer:hover {
 <!-- FLASH -->
 <div class="flash" id="flash"></div>
 
-<script>
-// ===== THUNDER FUNCTION =====
-function thunder(){
     const flash = document.getElementById("flash");
     flash.classList.add("active");
     document.body.classList.add("shake");
@@ -231,8 +236,6 @@ Wishing you a day full of laughter 🎉💛
 Stay as cute 💖🌻✨
 `;
 const container = document.getElementById("birthday-text");
-
-// Split letters
 message.split('').forEach(char => {
     const span = document.createElement('span');
     if(char === '\n') span.innerHTML = '<br>';
