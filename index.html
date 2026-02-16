@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Stranger Birthday</title>
+<title>Stranger Birthday Surprise</title>
 
 <style>
 /* ===== FULL SCREEN STRANGER THINGS THEME ===== */
@@ -18,6 +18,7 @@ body {
     overflow:hidden;
 }
 
+/* Dark cinematic overlay */
 body::after {
     content:"";
     position:absolute;
@@ -29,7 +30,7 @@ body::after {
     z-index:1;
 }
 
-/* Portrait rotate message */
+/* ROTATE MESSAGE (portrait) */
 .rotate {
     position:absolute;
     z-index:3;
@@ -42,45 +43,7 @@ body::after {
     letter-spacing:2px;
 }
 
-/* Birthday container */
-.birthday {
-    position:absolute;
-    z-index:5;
-    top:0;
-    left:0;
-    font-size:48px;
-    font-weight:bold;
-    color:#ff1a1a;
-    text-shadow:0 0 10px #ff0000, 0 0 30px #ff1a1a, 0 0 50px #ff3f3f;
-}
-
-/* Each letter glow + flicker */
-.letter {
-    display:inline-block;
-    animation:glow 1.2s infinite alternate;
-}
-
-@keyframes glow {
-    0% { text-shadow: 0 0 5px #ff0000,0 0 10px #ff1a1a; color:#ff4d4d; }
-    50% { text-shadow: 0 0 15px #ff0000,0 0 35px #ff1a1a; color:#ff1a1a; }
-    100% { text-shadow: 0 0 5px #ff0000,0 0 10px #ff1a1a; color:#ff4d4d; }
-}
-
-/* Slide across animation */
-.travel {
-    position:absolute;
-    animation:slideAcross 8s linear infinite;
-}
-
-@keyframes slideAcross {
-    0% { top:0; left:0; opacity:0; transform:rotate(-10deg) scale(0.8);}
-    10% {opacity:1;}
-    50% { top:40%; left:40%; transform:rotate(0deg) scale(1.1);}
-    90% {opacity:1;}
-    100% { top:80%; left:100%; opacity:0; transform:rotate(10deg) scale(0.9);}
-}
-
-/* Cinematic flash */
+/* ===== CINEMATIC FLASH ===== */
 .flash {
     position:fixed;
     top:0;
@@ -97,11 +60,11 @@ body::after {
     mix-blend-mode:screen;
 }
 
-.flash.active {
+.flash.active{
     animation:lightning 0.6s ease-out;
 }
 
-@keyframes lightning {
+@keyframes lightning{
     0%{opacity:0;}
     10%{opacity:1;}
     20%{opacity:0.4;}
@@ -111,11 +74,11 @@ body::after {
     100%{opacity:0;}
 }
 
-body.shake {
+body.shake{
     animation:shake 0.4s ease;
 }
 
-@keyframes shake {
+@keyframes shake{
     0%{transform:translate(0,0);}
     25%{transform:translate(-3px,2px);}
     50%{transform:translate(3px,-2px);}
@@ -123,59 +86,174 @@ body.shake {
     100%{transform:translate(0,0);}
 }
 
-@media screen and (orientation:landscape) {
-    .rotate {display:none;}
+/* ===== INTERACTIVE QUESTION ===== */
+#question {
+    position:absolute;
+    z-index:5;
+    top:40%;
+    width:100%;
+    text-align:center;
+    color:#ff1a1a;
+    font-size:32px;
+    font-weight:bold;
+    text-shadow:0 0 10px red,0 0 25px red;
+}
+
+button.answer {
+    margin: 10px;
+    padding:12px 20px;
+    font-size:20px;
+    font-weight:bold;
+    border:none;
+    cursor:pointer;
+    border-radius:5px;
+    background:#ff1a1a;
+    color:white;
+    text-shadow:0 0 5px #ff0000;
+    transition:0.2s all;
+}
+
+button.answer:hover {
+    background:#ff4d4d;
+    transform:scale(1.1);
+}
+
+/* ===== BIRTHDAY MESSAGE ===== */
+.birthday {
+    position:absolute;
+    z-index:6;
+    top:0;
+    left:0;
+    font-size:48px;
+    font-weight:bold;
+    color:#ff1a1a;
+    text-shadow:0 0 10px #ff0000,0 0 30px #ff1a1a,0 0 50px #ff3f3f;
+    display:none;
+}
+
+/* Each letter glow */
+.letter {
+    display:inline-block;
+    animation:glow 1.2s infinite alternate;
+}
+
+@keyframes glow {
+    0% { text-shadow: 0 0 5px #ff0000,0 0 10px #ff1a1a; color:#ff4d4d; }
+    50% { text-shadow: 0 0 15px #ff0000,0 0 35px #ff1a1a; color:#ff1a1a; }
+    100% { text-shadow: 0 0 5px #ff0000,0 0 10px #ff1a1a; color:#ff4d4d; }
+}
+
+/* Diagonal slide */
+.travel {
+    position:absolute;
+    animation:slideAcross 8s linear infinite;
+}
+
+@keyframes slideAcross {
+    0% { top:0; left:0; opacity:0; transform:rotate(-10deg) scale(0.8);}
+    10% {opacity:1;}
+    50% { top:40%; left:40%; transform:rotate(0deg) scale(1.1);}
+    90% {opacity:1;}
+    100% { top:80%; left:100%; opacity:0; transform:rotate(10deg) scale(0.9);}
+}
+
+/* ===== TICKER TAPE ===== */
+#ticker {
+    position:absolute;
+    bottom:10px;
+    width:100%;
+    white-space:nowrap;
+    overflow:hidden;
+    font-size:24px;
+    font-weight:bold;
+    color:#ff1a1a;
+    text-shadow:0 0 10px #ff0000;
+    display:none;
+}
+
+#ticker span {
+    display:inline-block;
+    padding-right:50px;
+    animation:scroll 15s linear infinite;
+}
+
+@keyframes scroll {
+    0% {transform:translateX(100%);}
+    100% {transform:translateX(-100%);}
 }
 </style>
 </head>
 
 <body>
 
-<!-- PORTRAIT MESSAGE -->
+<!-- ROTATE PROMPT -->
 <div class="rotate">
     📱 Rotate Your Phone... Enter The Upside Down
 </div>
 
-<!-- BIRTHDAY MESSAGE -->
-<div class="birthday travel" id="birthday-text">
-    <!-- Letters will be added by JS -->
+<!-- QUESTION -->
+<div id="question">
+    Do you want to enter the Upside Down? <br>
+    <button class="answer" id="yes">Yes</button>
+    <button class="answer" id="no">No</button>
 </div>
+
+<!-- BIRTHDAY MESSAGE -->
+<div class="birthday travel" id="birthday-text"></div>
+
+<!-- TICKER -->
+<div id="ticker"><span>🎉 Happy Birthday Shreyy!! 🎀💗✨ Stay awesome! 🌻💖🎉</span></div>
 
 <!-- FLASH -->
 <div class="flash" id="flash"></div>
 
 <script>
-/* ===== SPLIT TEXT INTO LETTERS ===== */
-const text = "Happy Birthday Shreyy!! 🎉🥳💗";
-const container = document.getElementById("birthday-text");
-
-for(let char of text){
-    const span = document.createElement("span");
-    span.textContent = char;
-    span.classList.add("letter");
-    container.appendChild(span);
-}
-
-/* ===== CINEMATIC THUNDER ===== */
+// ===== THUNDER FUNCTION =====
 function thunder(){
     const flash = document.getElementById("flash");
     flash.classList.add("active");
     document.body.classList.add("shake");
-
     setTimeout(()=>{
         flash.classList.remove("active");
         document.body.classList.remove("shake");
     },600);
 }
-
-/* Continuous thunder every 2–5s */
 function randomThunder(){
     thunder();
-    const next = 2000 + Math.random()*3000;
-    setTimeout(randomThunder, next);
+    setTimeout(randomThunder, 2000 + Math.random()*3000);
 }
-
 randomThunder();
+
+// ===== BIRTHDAY TEXT =====
+const message = `
+Happy Birthday Shreyy!! 🎀💗✨
+Wishing you a day full of laughter 🎉💛
+Stay as cute 💖🌻✨
+`;
+const container = document.getElementById("birthday-text");
+
+// Split letters
+message.split('').forEach(char => {
+    const span = document.createElement('span');
+    if(char === '\n') span.innerHTML = '<br>';
+    else span.textContent = char;
+    span.classList.add('letter');
+    container.appendChild(span);
+});
+
+// ===== INTERACTIVE YES/NO =====
+const question = document.getElementById("question");
+const ticker = document.getElementById("ticker");
+
+document.getElementById("yes").addEventListener("click", ()=>{
+    question.style.display = "none";        // hide question
+    container.style.display = "block";      // show birthday text
+    ticker.style.display = "block";         // show ticker tape
+});
+
+document.getElementById("no").addEventListener("click", ()=>{
+    alert("😶‍🌫️ Are you sure? Click YES to see the surprise!");
+});
 </script>
 
 </body>
