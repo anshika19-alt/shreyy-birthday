@@ -3,117 +3,135 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Stranger Birthday</title>
 
 <style>
+/* ===== BACKGROUND ===== */
 body{
-margin:0;
-padding:0;
-height:100vh;
-width:100vw;
-background-image:url("bg.jpg");
-background-size:cover;
-background-position:center;
-background-repeat:no-repeat;
-background-attachment:fixed;
-background-size:cover;
-font-family:Arial, Helvetica, sans-serif;
-overflow:hidden;
+    margin:0;
+    padding:0;
+    height:100vh;
+    width:100vw;
+    background:url("bg.jpg") no-repeat center center fixed;
+    background-size:cover;
+    font-family:Arial, Helvetica, sans-serif;
+    overflow:hidden;
 }
 
-/* Dark overlay */
+/* Dark cinematic overlay */
 body::after{
-content:"";
-position:absolute;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.65);
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.65);
+    z-index:1;
 }
 
-/* Portrait screen message */
-.portrait{
-position:absolute;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-color:#fff;
-text-align:center;
-z-index:2;
+/* ===== ROTATE MESSAGE (Portrait Mode) ===== */
+.rotate{
+    position:absolute;
+    z-index:3;
+    color:white;
+    width:100%;
+    text-align:center;
+    top:50%;
+    transform:translateY(-50%);
+    font-size:22px;
+    letter-spacing:2px;
 }
 
-.portrait h2{
-letter-spacing:3px;
-color:#ff2a2a;
-}
-
-/* Hidden birthday message */
+/* ===== BIRTHDAY TEXT ===== */
 .birthday{
-position:absolute;
-bottom:-200px;
-left:-200px;
-font-size:50px;
-color:#ff1a1a;
-font-weight:bold;
-text-shadow:0 0 20px red;
-z-index:3;
-opacity:0;
-transition:all 1.5s ease;
+    position:absolute;
+    z-index:5;
+    font-size:52px;
+    color:#ff1a1a;
+    font-weight:bold;
+    text-shadow:0 0 10px red, 0 0 25px red;
+    opacity:0;
 }
 
-/* Show ONLY in landscape */
+/* Animation: Comes from corner → moves → disappears */
+@keyframes travel {
+    0%{
+        left:-300px;
+        bottom:-200px;
+        opacity:0;
+        transform:scale(0.8) rotate(-10deg);
+    }
+    20%{opacity:1;}
+    50%{
+        left:40%;
+        bottom:40%;
+        transform:scale(1.1);
+    }
+    80%{opacity:1;}
+    100%{
+        left:110%;
+        bottom:80%;
+        opacity:0;
+        transform:scale(0.9);
+    }
+}
+
+/* Show only in landscape */
 @media screen and (orientation:landscape){
+    .rotate{display:none;}
 
-.portrait{
-display:none;
+    .birthday{
+        animation:travel 6s linear infinite;
+    }
 }
 
-.birthday{
-opacity:1;
-bottom:40%;
-left:20%;
-transform:rotate(-10deg);
-}
-
-/* Extra text */
-.message{
-position:absolute;
-top:65%;
-left:50%;
-transform:translateX(-50%);
-color:white;
-font-size:22px;
-z-index:3;
-text-align:center;
-animation:fadeIn 3s ease;
-}
-}
-
-@keyframes fadeIn{
-from{opacity:0;}
-to{opacity:1;}
+/* ===== THUNDER FLASH EFFECT ===== */
+.flash{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:white;
+    opacity:0;
+    z-index:4;
+    pointer-events:none;
 }
 </style>
 </head>
 
 <body>
 
-<div class="portrait">
-<h2>⚠️ Secret Portal Detected</h2>
-<p>Rotate your phone to enter the Upside Down 📱</p>
+<!-- Message shown before rotating -->
+<div class="rotate">
+    📱 Rotate Your Phone... Something Strange Is Waiting
 </div>
 
+<!-- ⚠️ EDIT YOUR MESSAGE HERE -->
 <div class="birthday">
-HAPPY BIRTHDAY SHREYY!!💗🎀
+    Happy Birthday Shreyy!! 🎂
 </div>
 
-<div class="message">
-<p>You survived another year 😌</p>
-<p>Welcome to Level: Legend 🎮</p>
-<p>Stay weird. Stay awesome. ✨</p>
-</div>
+<div class="flash" id="flash"></div>
+
+<script>
+/* ===== RANDOM THUNDER EFFECT ===== */
+function thunder(){
+    const flash = document.getElementById("flash");
+
+    flash.style.opacity = "0.8";
+
+    setTimeout(()=>{flash.style.opacity="0";},100);
+    setTimeout(()=>{flash.style.opacity="0.6";},200);
+    setTimeout(()=>{flash.style.opacity="0";},350);
+}
+
+/* Random lightning timing */
+setInterval(()=>{
+    thunder();
+}, 3000 + Math.random()*4000);
+</script>
 
 </body>
 </html>
