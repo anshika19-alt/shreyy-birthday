@@ -119,11 +119,11 @@ button.answer:hover {
     transform:scale(1.1);
 }
 
-/* ===== BIRTHDAY MESSAGE (TICKER STYLE) ===== */
+/* ===== MAIN BIRTHDAY MESSAGE (TICKER STYLE) ===== */
 .birthday {
     position:absolute;
     top:40%;  /* vertical position */
-    left:100%; /* start offscreen */
+    left:100%; /* start offscreen right */
     white-space:nowrap;
     font-size:52px;
     font-weight:bold;
@@ -134,7 +134,6 @@ button.answer:hover {
     animation:scrollRightToLeft 20s linear infinite;
 }
 
-/* Scrolling animation */
 @keyframes scrollRightToLeft {
     0% { left:100%; }
     100% { left:-100%; }
@@ -150,31 +149,6 @@ button.answer:hover {
     0% { text-shadow: 0 0 5px #ff0000,0 0 10px #ff1a1a; color:#ff4d4d; }
     50% { text-shadow: 0 0 15px #ff0000,0 0 35px #ff1a1a; color:#ff1a1a; }
     100% { text-shadow: 0 0 5px #ff0000,0 0 10px #ff1a1a; color:#ff4d4d; }
-}
-
-/* ===== TICKER TAPE AT BOTTOM ===== */
-#ticker {
-    position:absolute;
-    bottom:10px;
-    width:100%;
-    white-space:nowrap;
-    overflow:hidden;
-    font-size:24px;
-    font-weight:bold;
-    color:#ff1a1a;
-    text-shadow:0 0 10px #ff0000;
-    display:none;
-}
-
-#ticker span {
-    display:inline-block;
-    padding-right:50px;
-    animation:scrollTicker 15s linear infinite;
-}
-
-@keyframes scrollTicker {
-    0% {transform:translateX(100%);}
-    100% {transform:translateX(-100%);}
 }
 
 @media screen and (orientation:landscape) {
@@ -200,9 +174,6 @@ button.answer:hover {
 <!-- BIRTHDAY MESSAGE -->
 <div class="birthday" id="birthday-text"></div>
 
-<!-- TICKER -->
-<div id="ticker"><span>🎉 Happy Birthday to the sweetest person i met!! "Shreyy"👀✨🎀🎉</span></div>
-
 <!-- FLASH -->
 <div class="flash" id="flash"></div>
 
@@ -226,9 +197,9 @@ document.addEventListener("DOMContentLoaded", function(){
     randomThunder();
 
     // ===== BIRTHDAY TEXT =====
-    const message = `Happy Birthday Shreyy!! 🎀💗✨
+    const message = `Happiest Birthday to the sweetest person i met!! "Shreyy" !!🧿🫂
 Wishing you a day full of laughter 🎉💛
-Stay as cute 💖🌻✨`;
+Stay as cute as you're 👀🌻✨`;
 
     const container = document.getElementById("birthday-text");
     container.innerHTML = ""; // reset
@@ -242,12 +213,10 @@ Stay as cute 💖🌻✨`;
 
     // ===== INTERACTIVE YES/NO =====
     const question = document.getElementById("question");
-    const ticker = document.getElementById("ticker");
 
     document.getElementById("yes").addEventListener("click", ()=>{
-        question.style.display = "none";
-        container.style.display = "block"; // birthday message scrolls across
-        ticker.style.display = "block";    // ticker at bottom
+        question.style.display = "none";       // hide question
+        container.style.display = "block";     // show main birthday message
     });
 
     document.getElementById("no").addEventListener("click", ()=>{
